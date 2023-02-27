@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import "./App.css";
+import search from "./search.svg";
+import MovieCard from './MovieCard'
 
-function App() {
+const movie1 = {
+  Title: "The Amazing Spider-Man",
+  Year: "2012",
+  imdbID: "tt0948470",
+  Type: "movie",
+  Poster:
+    "https://m.media-amazon.com/images/M/MV5BMjMyOTM4MDMxNV5BMl5BanBnXkFtZTcwNjIyNzExOA@@._V1_SX300.jpg",
+};
+
+// 2ed5d710
+const API_URL = "http://www.omdbapi.com?apikey=2ed5d710";
+const App = () => {
+  const searchMovies = async (title) => {
+    const response = await fetch(`${API_URL}&s=${title}`);
+    const data = await response.json();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    searchMovies("amazing");
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Movie Hub</h1>
+      <div className="search">
+        <input
+          type="text"
+          placeholder="Search any movie"
+          value={"spider"}
+          onChange={() => {}}
+        />
+        <img src={search} alt="search" />
+      </div>
+      <div className="container">
+        <MovieCard movie={movie1}/>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
